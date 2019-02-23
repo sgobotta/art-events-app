@@ -3,10 +3,29 @@ import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
+import WelcomeScreen from '../screens/WelcomeScreen';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import EventsScreen from '../screens/EventsScreen'
+
+const WelcomeStack = createStackNavigator({
+  Welcome: WelcomeScreen,
+});
+
+WelcomeStack.navigationOptions = {
+  tabBarLabel: 'Welcome',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === 'ios'
+          ? `ios-information-circle${focused ? '' : '-outline'}`
+          : 'md-information-circle'
+      }
+    />
+  ),
+};
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -69,8 +88,9 @@ EventsStack.navigationOptions = {
 };
 
 export default createBottomTabNavigator({
-  EventsStack,
+  WelcomeStack,
   HomeStack,
+  EventsStack,
   LinksStack,
   SettingsStack,
 });
