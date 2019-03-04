@@ -26,7 +26,7 @@ export default class FacebookSignInScreen extends React.Component {
   }
 
   _signInAsync = async () => {
-    const appId = Constants.manifest.extra.facebookAppId
+    const appId = Constants.manifest.extra.dev.facebook.facebookAppId
     const redirectUrl = AuthSession.getRedirectUrl();
     try {
       const result = await AuthSession.startAsync({
