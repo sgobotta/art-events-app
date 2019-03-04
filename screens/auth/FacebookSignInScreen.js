@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   Alert,
   AsyncStorage,
@@ -10,9 +11,9 @@ import {
   AuthSession,
   Constants
 } from 'expo'
+import { logIn } from '../../store/actions/auth'
 
-
-export default class FacebookSignInScreen extends React.Component {
+class FacebookSignInScreen extends React.Component {
   static navigationOptions = {
     title: 'Facebook Sign In',
   };
@@ -39,9 +40,9 @@ export default class FacebookSignInScreen extends React.Component {
       console.log('Result', result)
 
       if (result.type === 'success') {
-        const { navigation } = this.props
+        const { logIn, navigation } = this.props
         const token = result.params.access_token
-        await AsyncStorage.setItem('userToken', token)
+        logIn({ token })
         const scope = 'email,public_profile,user_actions.events'
         const fields = 'email,events,name,picture'
         const fbUrl = `https://graph.facebook.com/me?access_token=${token}` +
@@ -69,3 +70,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   }
 })
+
+const mapStateToProps = (state) => {
+  return {
+
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logIn: (payload) => {
+      dispatch(logIn(payload));
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FacebookSignInScreen)

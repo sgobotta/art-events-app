@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   AsyncStorage,
   Button,
@@ -11,10 +12,12 @@ import {
   View,
 } from 'react-native';
 import { Constants } from 'expo';
+import { logOut } from '../store/actions/auth'
 
-export default class ExpoConfigView extends React.Component {
+class ExpoConfigView extends React.Component {
   _signOutAsync = async () => {
-    await AsyncStorage.removeItem('userToken');
+    const { logOut } = this.props
+    logOut()
     this.props.navigation.navigate('Auth');
   };
 
@@ -226,3 +229,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+const mapStateToProps = (state) => {
+  return {
+
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logOut: () => {
+      dispatch(logOut());
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpoConfigView)
