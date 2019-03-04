@@ -51,7 +51,7 @@ export default class FacebookSignInScreen extends React.Component {
         // Get the user's name using Facebook's Graph API
         const response = await fetch(fbUrl);
         const parsedResponse = await response.json()
-        navigation.navigate('Welcome');
+        navigation.navigate('Main');
       } else {
         // type === 'cancel'
       }
